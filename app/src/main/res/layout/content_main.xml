@@ -1,8 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!-- Task Title input at top, centered horizontally -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_text_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Task Title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="48dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- HOURS label -->
+    <TextView
+        android:id="@+id/hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hours"
+        app:layout_constraintTop_toBottomOf="@id/input_text_layout"
+        app:layout_constraintStart_toStartOf="@id/input_text_layout"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="200dp" />
+
+    <!-- Hour picker, aligned vertically with Hours label -->
+    <NumberPicker
+        android:id="@+id/hour_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/hours"
+        app:layout_constraintBottom_toBottomOf="@id/hours"
+        app:layout_constraintStart_toEndOf="@id/hours"
+        android:layout_marginStart="16dp" />
+
+    <!-- MINUTES label, aligned vertically with Hours label, to the right -->
+    <TextView
+        android:id="@+id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minutes"
+        app:layout_constraintTop_toTopOf="@id/hours"
+        app:layout_constraintStart_toEndOf="@id/hour_picker"
+        android:layout_marginStart="48dp" />
+
+    <!-- Minute picker, aligned vertically with Minutes label -->
+    <NumberPicker
+        android:id="@+id/minute_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/minutes"
+        app:layout_constraintBottom_toBottomOf="@id/minutes"
+        app:layout_constraintStart_toEndOf="@id/minutes"
+        app:layout_constraintEnd_toEndOf="@id/input_text_layout"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
