@@ -1,70 +1,133 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- Task Title input at top, centered horizontally -->
+    <!-- App Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/pomosaic"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- App Subtitle / Quote -->
+    <TextView
+        android:id="@+id/appSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Break tasks into strokes. Paint your day with focus."
+        android:textColor="#666666"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appTitle" />
+
+
+    <!-- Task Name Prompt -->
+    <TextView
+        android:id="@+id/taskNamePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Enter your task name here:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appSubtitle" />
+
+    <!-- Task Title input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_text_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/pencil"
+        android:alpha="0.8"
         android:hint="Task Title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:boxBackgroundMode="outline"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="48dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskNamePrompt">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="#040404"
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <!-- Time Prompt -->
+    <TextView
+        android:id="@+id/timePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Enter the time it takes to complete:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_text_layout" />
+
     <!-- HOURS label -->
-    <TextView
-        android:id="@+id/hours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hours"
-        app:layout_constraintTop_toBottomOf="@id/input_text_layout"
-        app:layout_constraintStart_toStartOf="@id/input_text_layout"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="200dp" />
 
-    <!-- Hour picker, aligned vertically with Hours label -->
-    <NumberPicker
-        android:id="@+id/hour_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/hours"
-        app:layout_constraintBottom_toBottomOf="@id/hours"
-        app:layout_constraintStart_toEndOf="@id/hours"
-        android:layout_marginStart="16dp" />
+    <!-- Hour picker -->
 
-    <!-- MINUTES label, aligned vertically with Hours label, to the right -->
-    <TextView
-        android:id="@+id/minutes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Minutes"
-        app:layout_constraintTop_toTopOf="@id/hours"
-        app:layout_constraintStart_toEndOf="@id/hour_picker"
-        android:layout_marginStart="48dp" />
+    <!-- MINUTES label -->
 
-    <!-- Minute picker, aligned vertically with Minutes label -->
+    <!-- Minute picker -->
     <NumberPicker
         android:id="@+id/minute_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/minutes"
-        app:layout_constraintBottom_toBottomOf="@id/minutes"
-        app:layout_constraintStart_toEndOf="@id/minutes"
-        app:layout_constraintEnd_toEndOf="@id/input_text_layout"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintBottom_toBottomOf="@id/minutes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintStart_toEndOf="@id/minutes"
+        app:layout_constraintTop_toTopOf="@id/minutes"
+        app:layout_constraintVertical_bias="0.54" />
+
+    <NumberPicker
+        android:id="@+id/hour_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/hours"
+        app:layout_constraintStart_toEndOf="@id/hours"
+        app:layout_constraintTop_toTopOf="@id/hours"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:text="Minutes"
+        app:layout_constraintStart_toEndOf="@id/hour_picker"
+        app:layout_constraintTop_toTopOf="@id/hours" />
+
+    <TextView
+        android:id="@+id/hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="68dp"
+        android:text="Hours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timePrompt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
