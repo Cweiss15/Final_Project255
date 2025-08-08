@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+
         binding.fab.setOnClickListener(this::handleFabClick);
 
         hourPicker = findViewById(R.id.hour_picker);
