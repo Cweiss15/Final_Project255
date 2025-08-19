@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.CountDownTimer;
 import android.view.View;
 import com.example.afinal.databinding.ActivityMainBinding;
+import com.google.android.material.textfield.TextInputEditText;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,8 +66,21 @@ public class MainActivity extends AppCompatActivity {
         int selectedMinutes = minutePicker.getValue();
         int totalTime = selectedHours * 60 + selectedMinutes;
 
+        TextInputEditText inputField = findViewById(R.id.input_text);
+        String taskNameInput = inputField.getText().toString().trim();
+        if (taskNameInput.isEmpty()) {
+            Snackbar.make(view, "Please enter a task name", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        if (totalTime <= 0) {
+            Snackbar.make(view, "Please enter the approximate length of time for this task", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(MainActivity.this, TimeIncrement.class);
         intent.putExtra("TOTAL_MINUTES", totalTime);
+        intent.putExtra("SELECTED_HOURS", selectedHours);
+        intent.putExtra("SELECTED_MINUTES", selectedMinutes);
+        intent.putExtra("TASK_NAME", taskNameInput);
         startActivity(intent);
     }
 

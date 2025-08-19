@@ -17,6 +17,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 // ... other imports ...
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import android.os.CountDownTimer; // Assuming this is used
 
 import java.util.ArrayList; // Assuming this is used
@@ -59,19 +61,20 @@ public class TimeIncrement extends AppCompatActivity {
             });
         }
 
+        TextView taskName = findViewById(R.id.task_name_and_time);
+        String taskNameInput = getIntent().getStringExtra("TASK_NAME");
+        int selectedHours = getIntent().getIntExtra("SELECTED_HOURS", 0);
+        int selectedMinutes = getIntent().getIntExtra("SELECTED_MINUTES", 0);
         int totalMinutes = getIntent().getIntExtra("TOTAL_MINUTES", 0);
+
+        taskName.setText(taskNameInput + "  -  " + selectedHours + "h " + selectedMinutes + "m");
+
         this.schedule = pomodoroIncrements(totalMinutes);
-        if (this.schedule != null && !this.schedule.isEmpty()) {
-            startSession(this.schedule);
-        } else {
-            TextView sessionLabel = findViewById(R.id.session_label);
-            TextView timerText = findViewById(R.id.timer_text);
-            if (sessionLabel != null) sessionLabel.setText("No Session");
-            if (timerText != null) timerText.setText("00:00");
-        }
+        startSession(this.schedule);
 
         FloatingActionButton fabPauseResume = findViewById(R.id.pause_resume);
         FloatingActionButton fabSkip = findViewById(R.id.skip);
+        FloatingActionButton fabBack = findViewById(R.id.back);
 
         if (fabPauseResume != null) {
             fabPauseResume.setOnClickListener(v -> {
@@ -85,15 +88,34 @@ public class TimeIncrement extends AppCompatActivity {
 
         if (fabSkip != null) {
             fabSkip.setOnClickListener(v -> {
-                if (countDownTimer != null) {
-                    countDownTimer.cancel();
-                }
-                currentSessionIndex++;
                 if (this.schedule != null && !this.schedule.isEmpty()) {
-                    startSession(this.schedule);
+                    if (currentSessionIndex < this.schedule.size() - 1) {
+                        if (countDownTimer != null) {
+                            countDownTimer.cancel();
+                        }
+                        currentSessionIndex++;
+                        startSession(this.schedule);
+                    } else {
+                        Snackbar.make(v, "This is your last session! You got this, no more skips!", Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
+
+        fabBack.setOnClickListener(v -> {
+            if (this.schedule != null && !this.schedule.isEmpty()) {
+                if (currentSessionIndex > 0) {
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                    }
+                    currentSessionIndex--;
+                    startSession(this.schedule);
+                } else {
+                    // Already at first session, can't go back
+                    Snackbar.make(v, "No more previous sessions", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     // --- Add these methods for the menu ---
