@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:src="@drawable/portraitbg"
         android:scaleType="centerCrop" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,45 +21,45 @@
             android:id="@+id/appTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:fontFamily="@font/pencilfont"
             android:text="Pomosaic"
-            android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="#333333"
+            android:fontFamily="@font/pencilfont"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="100dp" />
 
         <!-- Subtitle Line 1 -->
         <TextView
             android:id="@+id/appSubtitleLine1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/pencilfont"
             android:text="Break tasks into strokes."
             android:textColor="#666666"
+            android:fontFamily="@font/pencilfont"
             android:textSize="28sp"
             android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/appTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appTitle" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Subtitle Line 2 -->
         <TextView
             android:id="@+id/appSubtitleLine2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:fontFamily="@font/pencilfont"
             android:text="Paint your day with focus."
             android:textColor="#666666"
+            android:fontFamily="@font/pencilfont"
             android:textSize="28sp"
             android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@id/appSubtitleLine1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appSubtitleLine1" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
         <!-- Task Name Prompt -->
@@ -70,10 +69,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="37dp"
-            android:fontFamily="@font/pencilfont"
             android:text="Enter your task name here:"
-            android:textSize="20sp"
+            android:fontFamily="@font/pencilfont"
             android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appSubtitleLine2" />
 
@@ -93,8 +92,8 @@
                 android:id="@+id/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pencilfont"
                 android:inputType="text"
+                android:fontFamily="@font/pencilfont"
                 android:textColor="#040404"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,8 +107,8 @@
             android:layout_marginTop="45dp"
             android:fontFamily="@font/pencilfont"
             android:text="Enter the time it takes to complete:"
-            android:textSize="20sp"
             android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_text_layout" />
 
@@ -139,16 +138,15 @@
             app:layout_constraintVertical_bias="0.54" />
 
         <!-- Labels -->
-
         <TextView
             android:id="@+id/hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="92dp"
-            android:fontFamily="@font/pencilfont"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="68dp"
             android:text="Hours"
             android:textSize="20sp"
+            android:fontFamily="@font/pencilfont"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timePrompt" />
 
@@ -156,10 +154,10 @@
             android:id="@+id/minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="44dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/pencilfont"
             android:text="Minutes"
+            android:fontFamily="@font/pencilfont"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/hour_picker"
             app:layout_constraintTop_toTopOf="@id/hours" />
