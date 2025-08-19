@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         int selectedMinutes = minutePicker.getValue();
         int totalTime = selectedHours * 60 + selectedMinutes;
 
-        Intent intent = new Intent(MainActivity.this, TimeIncrementsActivity.class);
+        Intent intent = new Intent(MainActivity.this, TimeIncrement.class);
         intent.putExtra("TOTAL_MINUTES", totalTime);
         startActivity(intent);
     }
