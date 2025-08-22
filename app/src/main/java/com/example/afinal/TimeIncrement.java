@@ -196,15 +196,23 @@ public class TimeIncrement extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
             return true;}
-        else if (id == R.id.action_auto_start) {
-            item.setChecked(!item.isChecked()); // toggle the check
-            boolean autoStart = item.isChecked();
+        else if (id == R.id.action_enable_skips) {
+            item.setChecked(!item.isChecked()); // toggle
+            boolean skipsEnabled = item.isChecked();
 
+            // Save preference
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("auto_start_next", autoStart).apply();
+            prefs.edit().putBoolean("enable_skips", skipsEnabled).apply();
+
+            // Show/hide the skip FAB immediately
+            FloatingActionButton fabSkip = findViewById(R.id.skip);
+            if (fabSkip != null) {
+                fabSkip.setVisibility(skipsEnabled ? View.VISIBLE : View.GONE);
+            }
 
             return true;
-        } else if (id == R.id.action_about) {
+        }
+        else if (id == R.id.action_about) {
             // Handle about action
             Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
             return true;

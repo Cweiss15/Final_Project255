@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_auto_start) {
+        if (id == R.id.action_enable_skips) {
             item.setChecked(!item.isChecked());
             boolean autoStart = item.isChecked();
 
