@@ -12,6 +12,7 @@ import android.widget.Toast; // For example action
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull; // For @NonNull on onOptionsItemSelected
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -189,9 +190,6 @@ public class TimeIncrement extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
@@ -205,17 +203,23 @@ public class TimeIncrement extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.action_about) {
-            // Handle about action
-            Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+            showAboutDialog(); // Calls the method below
             return true;
         }
         else
             return super.onOptionsItemSelected(item);
 }
-    // --- End of menu methods ---
+    private void showAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.about_dialog_title));
+        builder.setMessage(getString(R.string.about_dialog_message));
+        builder.setPositiveButton(getString(R.string.dialog_ok), (dialog, which) -> {
+            dialog.dismiss();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
-
-    // ... your other methods (pomodoroIncrements, startSession, etc.) ...
     private List<String> pomodoroIncrements(int totalMinutes) {
         schedule = new ArrayList<>();
         int sessionCount = 0;
