@@ -45,58 +45,14 @@ public class TimeIncrement extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_time_increment);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
+        setupSessions();
+        setupFabs();
+    }
 
-        // Apply top inset padding directly to the Toolbar
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            // Apply the top inset as padding to the Toolbar
-            v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
-            return WindowInsetsCompat.CONSUMED; // Toolbar has consumed the top inset
-        });
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Timer");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable back arrow
-        }
-
-        // Apply other insets (left, right, bottom) to the main content view
-        View mainContentView = findViewById(R.id.main); // This is your R.id.main from content_time_increment.xml
-        if (mainContentView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainContentView, (v, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                // Content view gets padding for left, right, and bottom.
-                // Top padding is 0 because layout_behavior places it below the AppBarLayout.
-                v.setPadding(insets.left, 0, insets.right, insets.bottom);
-                return windowInsets; // Pass on the insets (potentially modified)
-            });
-        }
-
-        TextView taskName = findViewById(R.id.task_name_and_time);
-        String taskNameInput = getIntent().getStringExtra("TASK_NAME");
-        int selectedHours = getIntent().getIntExtra("SELECTED_HOURS", 0);
-        int selectedMinutes = getIntent().getIntExtra("SELECTED_MINUTES", 0);
-        int totalMinutes = getIntent().getIntExtra("TOTAL_MINUTES", 0);
-
-        if (taskName != null) { // Added null check
-            taskName.setText(taskNameInput + "  -  " + selectedHours + "h " + selectedMinutes + "m");
-        }
-
-        this.schedule = pomodoroIncrements(totalMinutes);
-        if (this.schedule != null && !this.schedule.isEmpty()) { // Added null/empty check
-            startSession(this.schedule);
-        } else {
-            // Handle scenario where schedule might be empty or null
-            TextView sessionLabel = findViewById(R.id.session_label);
-            TextView timerText = findViewById(R.id.timer_text);
-            if (sessionLabel != null) sessionLabel.setText("No Session");
-            if (timerText != null) timerText.setText("00:00");
-        }
-
+    private void setupFabs() {
         FloatingActionButton fabPauseResume = findViewById(R.id.pause_resume);
         FloatingActionButton fabSkip = findViewById(R.id.skip);
         FloatingActionButton fabBack = findViewById(R.id.back);
@@ -141,6 +97,39 @@ public class TimeIncrement extends AppCompatActivity {
                     }
                 }
             });
+        }
+    }
+
+    private void setupSessions() {
+        TextView taskName = findViewById(R.id.task_name_and_time);
+        String taskNameInput = getIntent().getStringExtra("TASK_NAME");
+        int selectedHours = getIntent().getIntExtra("SELECTED_HOURS", 0);
+        int selectedMinutes = getIntent().getIntExtra("SELECTED_MINUTES", 0);
+        int totalMinutes = getIntent().getIntExtra("TOTAL_MINUTES", 0);
+
+        if (taskName != null) {
+            taskName.setText(taskNameInput + "  -  " + selectedHours + "h " + selectedMinutes + "m");
+        }
+
+        this.schedule = pomodoroIncrements(totalMinutes);
+        if (this.schedule != null && !this.schedule.isEmpty()) {
+            startSession(this.schedule);
+        } else {
+            // Handle scenario where schedule might be empty or null
+            TextView sessionLabel = findViewById(R.id.session_label);
+            TextView timerText = findViewById(R.id.timer_text);
+            if (sessionLabel != null) sessionLabel.setText("No Session");
+            if (timerText != null) timerText.setText("00:00");
+        }
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Timer");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

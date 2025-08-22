@@ -121,29 +121,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
             return true;
         } else if (id == R.id.action_enable_skips) {
-            item.setChecked(!item.isChecked()); // toggle
+            item.setChecked(!item.isChecked());
             boolean skipsEnabled = item.isChecked();
 
-            // Save preference
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             prefs.edit().putBoolean("enable_skips", skipsEnabled).apply();
 
-            // Show/hide the skip FAB immediately
             FloatingActionButton fabSkip = findViewById(R.id.skip);
             if (fabSkip != null) {
                 fabSkip.setVisibility(skipsEnabled ? View.VISIBLE : View.GONE);
@@ -151,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.action_about) {
-            showAboutDialog(); // Calls the method below
+            showAboutDialog();
             return true;
         } else
             return super.onOptionsItemSelected(item);
