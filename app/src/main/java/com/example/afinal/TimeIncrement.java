@@ -2,35 +2,29 @@ package com.example.afinal;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-// Import Menu and MenuItem
+
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast; // For example action
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull; // For @NonNull on onOptionsItemSelected
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-// ... other imports ...
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.os.CountDownTimer; // Assuming this is used
+import android.os.CountDownTimer;
 
-import java.util.ArrayList; // Assuming this is used
-import java.util.List; // Assuming this is used
-import java.util.Locale; // Assuming this is used
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class TimeIncrement extends AppCompatActivity {
-    // ... your existing class variables ...
     final int WORK_DURATION = 25;
     final int SHORT_BREAK = 5;
     final int LONG_BREAK = 15;
@@ -83,7 +77,7 @@ public class TimeIncrement extends AppCompatActivity {
             });
         }
 
-        if (fabBack != null) { // Added null check
+        if (fabBack != null) {
             fabBack.setOnClickListener(v -> {
                 if (this.schedule != null && !this.schedule.isEmpty()) {
                     if (currentSessionIndex > 0) {
@@ -115,7 +109,6 @@ public class TimeIncrement extends AppCompatActivity {
         if (this.schedule != null && !this.schedule.isEmpty()) {
             startSession(this.schedule);
         } else {
-            // Handle scenario where schedule might be empty or null
             TextView sessionLabel = findViewById(R.id.session_label);
             TextView timerText = findViewById(R.id.timer_text);
             if (sessionLabel != null) sessionLabel.setText("No Session");
@@ -168,48 +161,38 @@ public class TimeIncrement extends AppCompatActivity {
         }
     }
 
-
-    // --- Add these methods for the menu ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
-            return true;}
-        else if (id == R.id.action_enable_skips) {
-            item.setChecked(!item.isChecked()); // toggle
+            return true;
+        } else if (id == R.id.action_enable_skips) {
+            item.setChecked(!item.isChecked());
             boolean skipsEnabled = item.isChecked();
 
-            // Save preference
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             prefs.edit().putBoolean("enable_skips", skipsEnabled).apply();
 
-            // Show/hide the skip FAB immediately
             FloatingActionButton fabSkip = findViewById(R.id.skip);
             if (fabSkip != null) {
                 fabSkip.setVisibility(skipsEnabled ? View.VISIBLE : View.GONE);
             }
 
             return true;
-        }
-        else if (id == R.id.action_about) {
+        } else if (id == R.id.action_about) {
             showAboutDialog();
             return true;
-        }
-        else
+        } else
             return super.onOptionsItemSelected(item);
-}
-    // --- End of menu methods ---
+    }
+
     private void showAboutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.about_dialog_title));
@@ -220,7 +203,7 @@ public class TimeIncrement extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    // ... your other methods (pomodoroIncrements, startSession, etc.) ...
+
     private List<String> pomodoroIncrements(int totalMinutes) {
         schedule = new ArrayList<>();
         int sessionCount = 0;
@@ -280,6 +263,7 @@ public class TimeIncrement extends AppCompatActivity {
                 timeLeftInMillis = millisUntilFinished;
                 updateTimerText();
             }
+
             @Override
             public void onFinish() {
                 isTimerRunning = false;
@@ -308,7 +292,6 @@ public class TimeIncrement extends AppCompatActivity {
     }
 
     private void resumeTimer() {
-        // Only resume if it was paused and there's time left
         if (isPaused && timeLeftInMillis > 0) {
             startTimer();
         }
