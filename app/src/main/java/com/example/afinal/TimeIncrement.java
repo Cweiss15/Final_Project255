@@ -39,7 +39,6 @@ public class TimeIncrement extends AppCompatActivity {
     private boolean isTimerRunning = false;
     private boolean isPaused = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +47,29 @@ public class TimeIncrement extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Apply top inset padding directly to the Toolbar
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Apply the top inset as padding to the Toolbar
+            v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
+            return WindowInsetsCompat.CONSUMED; // Toolbar has consumed the top inset
+        });
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Timer");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable back arrow
         }
-        if (getSupportActionBar() !=null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        View mainContentView = findViewById(R.id.main);
+
+        // Apply other insets (left, right, bottom) to the main content view
+        View mainContentView = findViewById(R.id.main); // This is your R.id.main from content_time_increment.xml
         if (mainContentView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainContentView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
-                return insets;
+            ViewCompat.setOnApplyWindowInsetsListener(mainContentView, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                // Content view gets padding for left, right, and bottom.
+                // Top padding is 0 because layout_behavior places it below the AppBarLayout.
+                v.setPadding(insets.left, 0, insets.right, insets.bottom);
+                return windowInsets; // Pass on the insets (potentially modified)
             });
         }
 
@@ -68,10 +79,20 @@ public class TimeIncrement extends AppCompatActivity {
         int selectedMinutes = getIntent().getIntExtra("SELECTED_MINUTES", 0);
         int totalMinutes = getIntent().getIntExtra("TOTAL_MINUTES", 0);
 
-        taskName.setText(taskNameInput + "  -  " + selectedHours + "h " + selectedMinutes + "m");
+        if (taskName != null) { // Added null check
+            taskName.setText(taskNameInput + "  -  " + selectedHours + "h " + selectedMinutes + "m");
+        }
 
         this.schedule = pomodoroIncrements(totalMinutes);
-        startSession(this.schedule);
+        if (this.schedule != null && !this.schedule.isEmpty()) { // Added null/empty check
+            startSession(this.schedule);
+        } else {
+            // Handle scenario where schedule might be empty or null
+            TextView sessionLabel = findViewById(R.id.session_label);
+            TextView timerText = findViewById(R.id.timer_text);
+            if (sessionLabel != null) sessionLabel.setText("No Session");
+            if (timerText != null) timerText.setText("00:00");
+        }
 
         FloatingActionButton fabPauseResume = findViewById(R.id.pause_resume);
         FloatingActionButton fabSkip = findViewById(R.id.skip);
@@ -103,20 +124,21 @@ public class TimeIncrement extends AppCompatActivity {
             });
         }
 
-        fabBack.setOnClickListener(v -> {
-            if (this.schedule != null && !this.schedule.isEmpty()) {
-                if (currentSessionIndex > 0) {
-                    if (countDownTimer != null) {
-                        countDownTimer.cancel();
+        if (fabBack != null) { // Added null check
+            fabBack.setOnClickListener(v -> {
+                if (this.schedule != null && !this.schedule.isEmpty()) {
+                    if (currentSessionIndex > 0) {
+                        if (countDownTimer != null) {
+                            countDownTimer.cancel();
+                        }
+                        currentSessionIndex--;
+                        startSession(this.schedule);
+                    } else {
+                        Snackbar.make(v, "No more previous sessions", Snackbar.LENGTH_SHORT).show();
                     }
-                    currentSessionIndex--;
-                    startSession(this.schedule);
-                } else {
-                    // Already at first session, can't go back
-                    Snackbar.make(v, "No more previous sessions", Snackbar.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        }
     }
 
     // --- Add these methods for the menu ---
