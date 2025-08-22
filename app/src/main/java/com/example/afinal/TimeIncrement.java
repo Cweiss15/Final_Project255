@@ -12,7 +12,6 @@ import android.widget.Toast; // For example action
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull; // For @NonNull on onOptionsItemSelected
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -190,36 +189,41 @@ public class TimeIncrement extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
             return true;}
-        else if (id == R.id.action_auto_start) {
-            item.setChecked(!item.isChecked()); // toggle the check
-            boolean autoStart = item.isChecked();
+        else if (id == R.id.action_enable_skips) {
+            item.setChecked(!item.isChecked()); // toggle
+            boolean skipsEnabled = item.isChecked();
 
+            // Save preference
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("auto_start_next", autoStart).apply();
+            prefs.edit().putBoolean("enable_skips", skipsEnabled).apply();
+
+            // Show/hide the skip FAB immediately
+            FloatingActionButton fabSkip = findViewById(R.id.skip);
+            if (fabSkip != null) {
+                fabSkip.setVisibility(skipsEnabled ? View.VISIBLE : View.GONE);
+            }
 
             return true;
-        } else if (id == R.id.action_about) {
-            showAboutDialog(); // Calls the method below
+        }
+        else if (id == R.id.action_about) {
+            // Handle about action
+            Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
         else
             return super.onOptionsItemSelected(item);
 }
-    private void showAboutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.about_dialog_title));
-        builder.setMessage(getString(R.string.about_dialog_message));
-        builder.setPositiveButton(getString(R.string.dialog_ok), (dialog, which) -> {
-            dialog.dismiss();
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
+    // --- End of menu methods ---
 
+
+    // ... your other methods (pomodoroIncrements, startSession, etc.) ...
     private List<String> pomodoroIncrements(int totalMinutes) {
         schedule = new ArrayList<>();
         int sessionCount = 0;

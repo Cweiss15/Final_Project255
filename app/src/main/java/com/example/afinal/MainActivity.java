@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,20 +127,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;}
+        else if (id == R.id.action_enable_skips) {
+            item.setChecked(!item.isChecked()); // toggle
+            boolean skipsEnabled = item.isChecked();
 
-        if (id == R.id.action_auto_start) {
-            item.setChecked(!item.isChecked());
-            boolean autoStart = item.isChecked();
-
+            // Save preference
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("auto_start_next", autoStart).apply();
+            prefs.edit().putBoolean("enable_skips", skipsEnabled).apply();
+
+            // Show/hide the skip FAB immediately
+            FloatingActionButton fabSkip = findViewById(R.id.skip);
+            if (fabSkip != null) {
+                fabSkip.setVisibility(skipsEnabled ? View.VISIBLE : View.GONE);
+            }
 
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        else if (id == R.id.action_about) {
+            // Handle about action
+            Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else
+            return super.onOptionsItemSelected(item);
     }
 
 }
