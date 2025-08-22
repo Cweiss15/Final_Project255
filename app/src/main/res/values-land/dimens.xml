@@ -1,3 +1,21 @@
 <resources>
     <dimen name="fab_margin">48dp</dimen>
+    <!-- Dimensions for the smaller CardView and its content in landscape -->
+    <dimen name="card_default_text_size_land">16sp</dimen>
+    <dimen name="card_large_text_size_land">38sp</dimen>
+    <dimen name="card_padding_vertical_land">16dp</dimen>
+    <dimen name="card_padding_horizontal_land">20dp</dimen>
+    <dimen name="card_text_margin_top_small_land">6dp</dimen>
+    <dimen name="card_text_margin_top_large_land">12dp</dimen>
+
+    <!-- Dimensions for FABs in landscape -->
+    <dimen name="fab_margin_end_land">28dp</dimen>
+    <dimen name="fab_group_padding_bottom_land">24dp</dimen>
+
+    <!-- General text sizes for landscape (if needed by other landscape layouts) -->
+    <!-- You might already have these from previous examples -->
+    <dimen name="default_text_size">18sp</dimen> <!-- Default from portrait, can override -->
+    <dimen name="large_text_size">48sp</dimen>   <!-- Default from portrait, can override -->
+    <dimen name="medium_text_size">16sp</dimen>
+    <dimen name="small_text_size">14sp</dimen>
 </resources>

@@ -1,4 +1,4 @@
-<!-- app/src/main/res/layout-land/content_time_increment.xml -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,22 +9,21 @@
     android:background="?android:attr/windowBackground"
     tools:context=".TimeIncrement">
 
-
     <ImageView
         android:id="@+id/background_image_land"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/timeincrementsbg"
-    android:scaleType="centerCrop"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
-
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/session_card"
         android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.7"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
@@ -33,17 +32,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.3"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginTop="32dp"
+        app:layout_constraintVertical_bias="0.4"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:paddingTop="@dimen/card_padding_vertical_land"
+            android:paddingBottom="@dimen/card_padding_vertical_land"
+            android:paddingStart="@dimen/card_padding_horizontal_land"
+            android:paddingEnd="@dimen/card_padding_horizontal_land"
             android:gravity="center_horizontal">
 
             <TextView
@@ -52,9 +52,10 @@
                 android:layout_height="wrap_content"
                 tools:text="My Awesome Task - 1h 30m"
                 android:fontFamily="@font/pencilfont"
-                android:textSize="@dimen/default_text_size"
-            android:textStyle="bold"
-            android:textColor="?android:attr/textColorPrimary" />
+                android:textSize="@dimen/card_default_text_size_land"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="?android:attr/textColorPrimary" />
 
             <TextView
                 android:id="@+id/session_label"
@@ -62,9 +63,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/work_session"
                 android:fontFamily="@font/pencilfont"
-                android:textSize="@dimen/default_text_size"
+                android:textSize="@dimen/card_default_text_size_land"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/card_text_margin_top_small_land"
+                android:gravity="center"
                 android:textColor="?android:attr/textColorPrimary" />
 
             <TextView
@@ -72,21 +74,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_25_00"
-                android:fontFamily="@font/pencilfont"
-            android:textSize="@dimen/large_text_size"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:textColor="?android:attr/textColorPrimary" />
+                android:textSize="@dimen/card_large_text_size_land"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/card_text_margin_top_large_land"
+                android:gravity="center"
+                android:textColor="?android:attr/textColorPrimary" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/button_group_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <LinearLayout
         android:id="@+id/button_group"
@@ -98,7 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="32dp" >
+        android:paddingBottom="@dimen/fab_group_padding_bottom_land">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/back"
@@ -107,7 +108,8 @@
             android:src="@drawable/baseline_arrow_back_ios_24"
             android:contentDescription="@string/back"
             app:fabSize="normal"
-        android:layout_marginEnd="32dp" />
+            android:layout_marginEnd="@dimen/fab_margin_end_land" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/pause_resume"
             android:layout_width="wrap_content"
@@ -115,7 +117,7 @@
             android:src="@drawable/outline_play_pause_24"
             android:contentDescription="@string/pause_resume"
             app:fabSize="normal"
-            android:layout_marginEnd="32dp" />
+            android:layout_marginEnd="@dimen/fab_margin_end_land" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/skip"
@@ -127,3 +129,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
