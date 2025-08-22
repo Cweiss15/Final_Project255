@@ -21,7 +21,7 @@
     <string name="work_session">Work Session</string>
     <string name="_25_00">25:00</string>
     <string name="about_dialog_title">About Pomosaic</string>
-    <string name="about_dialog_message">Pomosaic v1.0\nDeveloped by Your Name/Company\n\nThank you for using Pomosaic to paint your day with focus!</string>
+    <string name="about_dialog_message">Pomosaic v1.0\nDeveloped by Etty Werczberger and Chana Weiss\nMCOO 255 Summer 25 Final Project\nThank you for using Pomosaic to paint your day with focus!</string>
     <string name="dialog_ok">OK</string>
 
 </resources>

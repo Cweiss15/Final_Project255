@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
-            return true;}
-        else if (id == R.id.action_enable_skips) {
+            return true;
+        } else if (id == R.id.action_enable_skips) {
             item.setChecked(!item.isChecked()); // toggle
             boolean skipsEnabled = item.isChecked();
 
@@ -150,14 +150,21 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return true;
-        }
-        else if (id == R.id.action_about) {
-            // Handle about action
-            Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_about) {
+            showAboutDialog(); // Calls the method below
             return true;
-        }
-        else
+        } else
             return super.onOptionsItemSelected(item);
     }
 
+    private void showAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.about_dialog_title));
+        builder.setMessage(getString(R.string.about_dialog_message));
+        builder.setPositiveButton(getString(R.string.dialog_ok), (dialog, which) -> {
+            dialog.dismiss();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
