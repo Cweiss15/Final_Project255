@@ -51,7 +51,8 @@ public class TimeIncrement extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Timer");
         }
-
+        if (getSupportActionBar() !=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View mainContentView = findViewById(R.id.main);
         if (mainContentView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainContentView, (v, insets) -> {
@@ -132,9 +133,10 @@ public class TimeIncrement extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            finish();
+            return true;}
+        else if (id == R.id.action_settings) {
             // Handle settings action
             Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
             return true;
@@ -143,9 +145,9 @@ public class TimeIncrement extends AppCompatActivity {
             Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
+        else
+            return super.onOptionsItemSelected(item);
+}
     // --- End of menu methods ---
 
 
