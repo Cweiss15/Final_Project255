@@ -47,5 +47,14 @@
     <string name="back">Back</string>
     <string name="pause_resume">Pause/Resume</string>
     <string name="skip">Skip</string>
+    <string name="enter_the_time_it_takes_to_complete">Enter the time it takes to complete:</string>
+    <string name="enter_your_task_name_here">Enter your task name here:</string>
+    <string name="paint_your_day_with_focus">Paint your day with focus.</string>
+    <string name="break_tasks_into_strokes">Break tasks into strokes.</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="task_title">Task Title</string>
+    <string name="work_session">Work Session</string>
+    <string name="_25_00">25:00</string>
 
 </resources>
