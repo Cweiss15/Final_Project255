@@ -1,6 +1,9 @@
 package com.example.afinal;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.view.View;
 import com.example.afinal.databinding.ActivityMainBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -48,6 +52,34 @@ public class MainActivity extends AppCompatActivity {
         setupTimePickers();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the inputs
+        TextInputEditText inputField = findViewById(R.id.input_text);
+        outState.putString("TASK_NAME", inputField.getText().toString());
+        outState.putInt("HOUR_VALUE", hourPicker.getValue());
+        outState.putInt("MINUTE_VALUE", minutePicker.getValue());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore the inputs
+        if (savedInstanceState != null) {
+            String taskName = savedInstanceState.getString("TASK_NAME", "");
+            int hour = savedInstanceState.getInt("HOUR_VALUE", 0);
+            int minute = savedInstanceState.getInt("MINUTE_VALUE", 0);
+
+            TextInputEditText inputField = findViewById(R.id.input_text);
+            inputField.setText(taskName);
+            hourPicker.setValue(hour);
+            minutePicker.setValue(minute);
+        }
+    }
+
     private void setupTimePickers() {
         hourPicker.setMinValue(0);
         hourPicker.setMaxValue(12);
@@ -73,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (totalTime <= 0) {
-            Snackbar.make(view, "Please enter the approximate length of time for this task", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, "Please enter a valid task time", Snackbar.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(MainActivity.this, TimeIncrement.class);
@@ -98,8 +130,13 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_auto_start) {
+            item.setChecked(!item.isChecked());
+            boolean autoStart = item.isChecked();
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putBoolean("auto_start_next", autoStart).apply();
+
             return true;
         }
 

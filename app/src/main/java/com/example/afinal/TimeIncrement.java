@@ -1,7 +1,9 @@
 package com.example.afinal;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 // Import Menu and MenuItem
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -141,6 +143,42 @@ public class TimeIncrement extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("CURRENT_SESSION_INDEX", currentSessionIndex);
+        outState.putLong("TIME_LEFT", timeLeftInMillis);
+        outState.putBoolean("IS_TIMER_RUNNING", isTimerRunning);
+        outState.putBoolean("IS_PAUSED", isPaused);
+        outState.putStringArrayList("SCHEDULE", new ArrayList<>(schedule));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        currentSessionIndex = savedInstanceState.getInt("CURRENT_SESSION_INDEX", 0);
+        timeLeftInMillis = savedInstanceState.getLong("TIME_LEFT", 0);
+        isTimerRunning = savedInstanceState.getBoolean("IS_TIMER_RUNNING", false);
+        isPaused = savedInstanceState.getBoolean("IS_PAUSED", false);
+        schedule = savedInstanceState.getStringArrayList("SCHEDULE");
+
+        if (schedule != null && !schedule.isEmpty()) {
+            TextView sessionLabel = findViewById(R.id.session_label);
+            if (sessionLabel != null) {
+                sessionLabel.setText(schedule.get(currentSessionIndex));
+            }
+            updateTimerText();
+            if (isTimerRunning && !isPaused) {
+                startTimer();
+            } else if (isPaused) {
+                updateTimerText();
+            }
+        }
+    }
+
+
     // --- Add these methods for the menu ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -158,9 +196,13 @@ public class TimeIncrement extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
             return true;}
-        else if (id == R.id.action_settings) {
-            // Handle settings action
-            Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+        else if (id == R.id.action_auto_start) {
+            item.setChecked(!item.isChecked()); // toggle the check
+            boolean autoStart = item.isChecked();
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putBoolean("auto_start_next", autoStart).apply();
+
             return true;
         } else if (id == R.id.action_about) {
             // Handle about action
@@ -238,6 +280,12 @@ public class TimeIncrement extends AppCompatActivity {
                 isTimerRunning = false;
                 currentSessionIndex++;
                 if (TimeIncrement.this.schedule != null && !TimeIncrement.this.schedule.isEmpty()) {
+                    startSession(TimeIncrement.this.schedule);
+                }
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(TimeIncrement.this);
+                boolean autoStart = prefs.getBoolean("auto_start_next", true);
+
+                if (autoStart) {
                     startSession(TimeIncrement.this.schedule);
                 }
             }
