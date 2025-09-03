@@ -18,7 +18,8 @@ It helps users manage tasks using the Pomodoro technique while offering a colorf
 ## Sneak Peak
 
 <p align="center">
-  <img src="images/PomosaicHome.png" width="200" style="margin-right: 50px;"/>
+  <img src="images/PomosaicHome.png" width="200" />
+   &nbsp;&nbsp;&nbsp;
   <img src="images/PomosaicSession.png" width="200"/>
 </p>
 
