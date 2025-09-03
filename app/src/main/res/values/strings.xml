@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Final</string>
+    <string name="app_name">Pomosaic</string>
     <string name="action_settings">Settings</string>
     <string name="pomosaic">Pomosaic</string>
     <!-- Strings used for fragments for navigation -->
