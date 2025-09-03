@@ -18,8 +18,8 @@ It helps users manage tasks using the Pomodoro technique while offering a colorf
 ## Sneak Peak
 
 <p align="center">
-  <img src="images/PomosaicHome.png" width="200"/>
-  <img src=""C:\Users\chana\AndroidStudioProjects\Final_Project255\PomosaicSession.png"" width="200"/>
+  <img src="images/pomosaicHome.png" width="200"/>
+  <img src="images/pomosaicSession.png" width="200"/>
 </p>
 
 ## Presentation
