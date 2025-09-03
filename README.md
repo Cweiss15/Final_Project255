@@ -15,10 +15,10 @@ It helps users manage tasks using the Pomodoro technique while offering a colorf
 - **IDE:** Android Studio  
 - **UI:** XML layouts with ConstraintLayout, CoordinatorLayout, Toolbar/ActionBar  
 
-## Screenshots
+## Sneak Peak
 
 <p align="center">
-  <img src=""C:\Users\chana\AndroidStudioProjects\Final_Project255\PomosaicHome.png"" width="200"/>
+  <img src="images/PomosaicHome.png" width="200"/>
   <img src=""C:\Users\chana\AndroidStudioProjects\Final_Project255\PomosaicSession.png"" width="200"/>
 </p>
 
@@ -29,6 +29,6 @@ Chechout our presentation introducing Pomosaic and its features!
 ## Getting Started
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/pomosaic.git
+   [git clone] (https://github.com/Cweiss15/Pomosaic)
 2. Open the project in Android Studio.
 3. Run the app on an emulator or physical device (Android 8.0+ recommended).
